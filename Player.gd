@@ -28,3 +28,7 @@ func _process(delta): # Player Movement
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 
+func _physics_process(delta):
+	for body in $Area2D.get_overlapping_bodies():
+		if body.is_in_group("pickups"):
+			body.queue_free()
