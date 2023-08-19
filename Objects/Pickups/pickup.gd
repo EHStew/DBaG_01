@@ -1,4 +1,6 @@
-extends RigidBody2D
+extends Node
+
+class_name Pickup
 
 
 # Called when the node enters the scene tree for the first time.

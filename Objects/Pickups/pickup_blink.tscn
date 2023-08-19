@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://4x5rqjab8y0u"]
+
+[ext_resource type="Texture2D" uid="uid://cia6qglk7wt21" path="res://Assets/sprites/arrow.png" id="2_c0r6f"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i2bdo"]
+radius = 13.0
+height = 52.0
+
+[node name="pickupBlink" type="Area2D"]
+position = Vector2(596, 248)
+
+[node name="Arrow" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_c0r6f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_i2bdo")
