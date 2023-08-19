@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhmp6cfb8ynk8"]
+
+[ext_resource type="Texture2D" uid="uid://bm8lyhw6x84nt" path="res://Assets/sprites/little guy.png" id="1_jal23"]
+
+[node name="LittleGuy" type="Sprite2D"]
+position = Vector2(182, 203)
+scale = Vector2(2, 2)
+texture = ExtResource("1_jal23")
