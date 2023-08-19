@@ -7,7 +7,9 @@
 size = Vector2(32, 18)
 
 [node name="Area2D" type="Area2D"]
+position = Vector2(326, 262)
 script = ExtResource("1_pjcek")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)

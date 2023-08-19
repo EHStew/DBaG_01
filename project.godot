@@ -14,11 +14,6 @@ config/name="D Ba G 01"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
-[display]
-
-window/size/viewport_width=576
-window/size/viewport_height=324
-
 [input]
 
 move_right={
