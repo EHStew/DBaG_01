@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkkd7vsker6gm"]
+
+[ext_resource type="Texture2D" uid="uid://bra0k0m1s7jo0" path="res://Assets/sprites/clock.png" id="1_mm6rv"]
+[ext_resource type="Script" path="res://time_pickup.gd" id="1_r30n3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1hjdy"]
+radius = 6.69991
+
+[node name="Time_pickup" type="Area2D"]
+position = Vector2(526, 229)
+scale = Vector2(3, 3)
+script = ExtResource("1_r30n3")
+metadata/_edit_group_ = true
+
+[node name="Clock" type="Sprite2D" parent="."]
+texture = ExtResource("1_mm6rv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1hjdy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

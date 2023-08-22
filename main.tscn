@@ -1,26 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://cwtpfcqo4drny"]
+[gd_scene load_steps=5 format=3 uid="uid://cwtpfcqo4drny"]
 
-[ext_resource type="PackedScene" uid="uid://p7rilv2c2l4a" path="res://player.tscn" id="1_y2tpf"]
+[ext_resource type="PackedScene" uid="uid://p7rilv2c2l4a" path="res://Player.tscn" id="1_y2tpf"]
 [ext_resource type="PackedScene" uid="uid://ca0stkrawqaec" path="res://enemy.tscn" id="2_nv3uj"]
 [ext_resource type="PackedScene" uid="uid://4x5rqjab8y0u" path="res://Objects/Pickups/pickup_blink.tscn" id="3_j52fs"]
+[ext_resource type="PackedScene" uid="uid://dkkd7vsker6gm" path="res://time_pickup.tscn" id="4_ys1io"]
 
 [node name="Main" type="Node2D"]
-
-[node name="pickupBlink2" parent="." instance=ExtResource("3_j52fs")]
-position = Vector2(1024, 524)
-
-[node name="Enemy" parent="." instance=ExtResource("2_nv3uj")]
-visible = false
-position = Vector2(663, 336)
-move_dir = Vector2(30, 0)
-
-[node name="pickupBlink" parent="." instance=ExtResource("3_j52fs")]
-position = Vector2(138, 84)
 
 [node name="Player" parent="." instance=ExtResource("1_y2tpf")]
 position = Vector2(452, 501)
 
+[node name="pickupBlink2" parent="." instance=ExtResource("3_j52fs")]
+position = Vector2(1005, 321)
+
+[node name="Enemy" parent="." instance=ExtResource("2_nv3uj")]
+position = Vector2(102, 82)
+move_dir = Vector2(30, 0)
+
+[node name="Enemy2" parent="." instance=ExtResource("2_nv3uj")]
+position = Vector2(994, 575)
+move_dir = Vector2(30, 0)
+
+[node name="pickupBlink" parent="." instance=ExtResource("3_j52fs")]
+position = Vector2(121, 349)
+
 [node name="pickupBlink3" parent="." instance=ExtResource("3_j52fs")]
-position = Vector2(726, 164)
+position = Vector2(645, 190)
+gravity_space_override = 1
+
+[node name="Time_pickup" parent="." instance=ExtResource("4_ys1io")]
+position = Vector2(768, 183)
+
+[node name="Time_pickup2" parent="." instance=ExtResource("4_ys1io")]
+position = Vector2(150, 592)
 
 [connection signal="body_entered" from="Enemy" to="Enemy" method="_on_body_entered"]
+[connection signal="body_entered" from="Enemy2" to="Enemy2" method="_on_body_entered"]
