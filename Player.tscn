@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xenok"]
 size = Vector2(24, 18)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 position = Vector2(421, 378)
 scale = Vector2(3, 3)
 script = ExtResource("1_mu7wn")

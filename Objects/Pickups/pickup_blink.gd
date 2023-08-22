@@ -11,8 +11,8 @@ func _process(delta):
 	pass
 
 
-func _on_area_entered(area):
-	if area.is_in_group("Player"):
-		area.blink_counter += 1
+func _on_body_entered(body):
+	if body.is_in_group("Player"):
+		body.blinkCounter += 1
 		print("collected blink")
-	
+		queue_free()

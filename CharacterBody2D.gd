@@ -22,7 +22,7 @@ var dashing = false
 var dashFriction = friction 
 var dashLength = .2
 
-var blinkCounter = 1
+var blinkCounter = 0
 
 func _ready():
 	screenSize = get_viewport_rect().size
@@ -80,6 +80,7 @@ func dash():
 		if blinkCounter >= 1:
 			print("Dashing")
 			dashing = true
+			blinkCounter -= 1
 			await  get_tree().create_timer(.05).timeout
 			self.hide()
 			await  get_tree().create_timer(.08).timeout
