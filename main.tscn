@@ -7,10 +7,12 @@
 [node name="Main" type="Node2D"]
 
 [node name="Enemy" parent="." instance=ExtResource("2_nv3uj")]
+visible = false
 position = Vector2(663, 336)
 move_dir = Vector2(30, 0)
 
 [node name="pickupBlink" parent="." instance=ExtResource("3_j52fs")]
+visible = false
 position = Vector2(426, 256)
 
 [node name="Player" parent="." instance=ExtResource("1_y2tpf")]
