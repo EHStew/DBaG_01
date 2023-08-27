@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwtpfcqo4drny"]
+[gd_scene load_steps=6 format=3 uid="uid://cwtpfcqo4drny"]
 
 [ext_resource type="PackedScene" uid="uid://p7rilv2c2l4a" path="res://Player.tscn" id="1_y2tpf"]
 [ext_resource type="PackedScene" uid="uid://ca0stkrawqaec" path="res://enemy.tscn" id="2_nv3uj"]
 [ext_resource type="PackedScene" uid="uid://4x5rqjab8y0u" path="res://Objects/Pickups/pickup_blink.tscn" id="3_j52fs"]
 [ext_resource type="PackedScene" uid="uid://dkkd7vsker6gm" path="res://time_pickup.tscn" id="4_ys1io"]
+[ext_resource type="PackedScene" uid="uid://dt1hq5a0ie8u2" path="res://time_bubble.tscn" id="5_3qur8"]
 
 [node name="Main" type="Node2D"]
 
@@ -33,6 +34,8 @@ position = Vector2(768, 183)
 
 [node name="Time_pickup2" parent="." instance=ExtResource("4_ys1io")]
 position = Vector2(150, 592)
+
+[node name="time_bubble" parent="." instance=ExtResource("5_3qur8")]
 
 [connection signal="body_entered" from="Enemy" to="Enemy" method="_on_body_entered"]
 [connection signal="body_entered" from="Enemy2" to="Enemy2" method="_on_body_entered"]

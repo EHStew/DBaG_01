@@ -3,11 +3,16 @@ extends Node2D
 var rotation_angle = 50
 var angle_from = 0
 var angle_to = 0
-var timerWidth = 10
+var t_Angle_from = 0
+var t_Angle_to = 0
+var timerWidth = 7
+var bubbleBuildSpeed = 15
+var bubbleBuilt = false
+var bubbleTime = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var player = $/root/main/player
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,10 +26,33 @@ func _process(delta):
 		angle_from = wrapf(angle_from, 0, 360)
 		angle_to = wrapf(angle_to, 0, 360)
 	
-	if angle_to < 360:
-		angle_to += 30
-	queue_redraw()
+	if not bubbleBuilt:
+		build_bubble()
+	elif bubbleBuilt:
+		bubble_Timer(delta)
 	
+	queue_redraw()
+
+func build_bubble():
+	if angle_to < 360:
+		angle_to += bubbleBuildSpeed
+		t_Angle_from = angle_from
+		t_Angle_to = angle_to
+	elif  angle_to + bubbleBuildSpeed >= 360:
+		if angle_to < 360:
+			angle_to += 1
+			t_Angle_to = angle_to
+		else:
+			await  get_tree().create_timer(.5).timeout
+			bubbleBuilt = true
+
+		
+func bubble_Timer(delta):
+		if t_Angle_from < 360:
+			t_Angle_from += bubbleTime * delta
+		elif t_Angle_from >= 360:
+			queue_free()
+		
 	
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	var nb_points = 64
@@ -57,4 +85,4 @@ func _draw():
 	var color = Color(1.0, 1.0, 1.0)
 
 	draw_circle_arc( center, radius, angle_from, angle_to, color )
-	draw_timer_arc(center, radius, angle_from, angle_to, Color(0.0, 0.0, 0.0))
+	draw_timer_arc(center, radius, t_Angle_from, t_Angle_to, Color(0.0, 0.0, 0.0))

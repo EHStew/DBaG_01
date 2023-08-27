@@ -8,7 +8,7 @@ size = Vector2(24, 18)
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
 position = Vector2(421, 378)
-scale = Vector2(3, 3)
+scale = Vector2(2, 2)
 script = ExtResource("1_t3me8")
 metadata/_edit_group_ = true
 
