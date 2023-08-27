@@ -79,6 +79,24 @@ func draw_timer_arc(center, radius, angle_from, angle_to, color):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color, timerWidth * .80, true)
 
 
+func explosion(bubblePos, radius):
+	var area = Area2D.new()
+	var shape = CircleShape2D.new()
+	shape.set_radius(radius)
+	area.add_shape(shape)
+	$Self.add_child(area)    
+	area.set_enable_monitoring(true)
+	await get_tree().process_frame
+	area.set_pos(bubblePos)
+	await get_tree().process_frame
+	var area_list = area.get_overlapping_areas()
+	print(area_list)
+	for i in area_list:
+		if i.has_method("get_slowed"): 
+			i.get_slowed()
+	area.queue_free()
+
+
 func _draw():
 	var center = Vector2.ZERO
 	var radius = 150
