@@ -101,14 +101,9 @@ func dash():
 
 #func slow_time():
 	if Input.is_action_just_pressed("use_power"):
-		if timeCounter >= 1:
-			timeCounter -= 1
-			timeSlowed = true
-			print("slowing time")
-			slowFactor = 0.5
-			await  get_tree().create_timer(2).timeout
-			timeSlowed = false
-			slowFactor = 1
+		var tBubble = load("res://time_bubble.tscn")
+		var instance = tBubble.instantiate()
+		add_child(instance)
 	else:
 		pass
 

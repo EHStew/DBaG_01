@@ -46,7 +46,10 @@ func bubble_Timer(delta):
 		elif t_Angle_from >= 360:
 			t_Angle_from = 360
 			if angle_from <= angle_to:
-				angle_from += bubbleBuildSpeed
+				if  angle_from + bubbleBuildSpeed < angle_to:
+					angle_from += bubbleBuildSpeed
+				else:
+					angle_from += 1
 			else:
 				queue_free()
 
