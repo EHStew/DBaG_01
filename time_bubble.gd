@@ -22,17 +22,15 @@ func _ready():
 func _process(delta):
 
 	# Rotate arc 
-	# angle_from += rotation_angle * delta
-	# angle_to += rotation_angle * delta
 
-	# We only wrap angles when both of them are bigger than 360.
-	if angle_from > 360 and angle_to > 360:
-		angle_from = wrapf(angle_from, 0, 360)
-		angle_to = wrapf(angle_to, 0, 360)
+	handle_overlap()
 	
 	create_bubble(delta)
 	
 	queue_redraw()
+
+
+
 
 func build_bubble():
 	if angle_to < 360:
@@ -51,7 +49,11 @@ func bubble_Timer(delta):
 		if t_Angle_from < 360:
 			t_Angle_from += bubbleTime * delta
 		elif t_Angle_from >= 360:
-			queue_free()
+			t_Angle_from = 360
+			if angle_from <= angle_to:
+				angle_from += bubbleBuildSpeed
+			else:
+				queue_free()
 
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	var nb_points = 64
@@ -75,6 +77,10 @@ func draw_timer_arc(center, radius, angle_from, angle_to, color):
 	for index_point in range(nb_points):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color, timerWidth * .80, true)
 
+func handle_overlap():
+	if angle_from > 360 and angle_to > 360:
+		angle_from = wrapf(angle_from, 0, 360)
+		angle_to = wrapf(angle_to, 0, 360)
 
 func create_bubble(delta):
 	var area
