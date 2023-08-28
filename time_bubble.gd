@@ -11,6 +11,7 @@ var bubbleBuilt = false
 var bubbleTime = 100
 var radius = 150
 var bubbleExists = false
+var slowAmount = .3
 
 
 # Called when the node enters the scene tree for the first time.
@@ -100,8 +101,6 @@ func create_bubble(delta):
 		center = Vector2.ZERO
 		bubblePos = Vector2.ZERO
 		add_child(collision) 
-		add_to_group("time_bubble")
-		print("added collision to group")
 		set_monitoring(true)
 		bubbleExists = true
 	else:
@@ -132,7 +131,7 @@ func _draw():
 
 func _on_area_entered(area):
 	if area.is_in_group("Slowable"):
-		area.slowFactor = 0.5
+		area.slowFactor = slowAmount
 
 func _on_area_exited(area):
 	if area.is_in_group("Slowable"):
