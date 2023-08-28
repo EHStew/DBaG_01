@@ -58,7 +58,7 @@ func get_dir():
 func player_movement(delta):
 	dir = get_dir()
 	dash()
-	slow_time()
+	
 	if not dashing:
 		if dir == Vector2.ZERO:
 			if velocity.length() > (friction * delta):
@@ -78,7 +78,8 @@ func player_movement(delta):
 	position.x = clamp(position.x, 0, screenSize.x)
 	position.y = clamp(position.y, 0, screenSize.y)
 
-
+#func time_bubble():
+	
 
 func dash():
 	if Input.is_action_just_pressed("dash"):
@@ -98,7 +99,7 @@ func dash():
 
 
 
-func slow_time():
+#func slow_time():
 	if Input.is_action_just_pressed("use_power"):
 		if timeCounter >= 1:
 			timeCounter -= 1

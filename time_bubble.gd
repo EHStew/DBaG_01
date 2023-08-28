@@ -1,4 +1,4 @@
-extends Node2D
+extends Area2D
 
 var rotation_angle = 50
 var angle_from = 0
@@ -9,14 +9,18 @@ var timerWidth = 7
 var bubbleBuildSpeed = 15
 var bubbleBuilt = false
 var bubbleTime = 100
+var radius = 150
+var bubbleExists = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var player = $/root/main/player
+	var player = $/root/Main/Player
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+
 	# Rotate arc 
 	# angle_from += rotation_angle * delta
 	# angle_to += rotation_angle * delta
@@ -26,10 +30,7 @@ func _process(delta):
 		angle_from = wrapf(angle_from, 0, 360)
 		angle_to = wrapf(angle_to, 0, 360)
 	
-	if not bubbleBuilt:
-		build_bubble()
-	elif bubbleBuilt:
-		bubble_Timer(delta)
+	create_bubble(delta)
 	
 	queue_redraw()
 
@@ -46,14 +47,12 @@ func build_bubble():
 			await  get_tree().create_timer(.5).timeout
 			bubbleBuilt = true
 
-		
 func bubble_Timer(delta):
 		if t_Angle_from < 360:
 			t_Angle_from += bubbleTime * delta
 		elif t_Angle_from >= 360:
 			queue_free()
-		
-	
+
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	var nb_points = 64
 	var points_arc = PackedVector2Array()
@@ -64,9 +63,7 @@ func draw_circle_arc(center, radius, angle_from, angle_to, color):
 
 	for index_point in range(nb_points):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color, timerWidth, true)
-	
-	
-	
+
 func draw_timer_arc(center, radius, angle_from, angle_to, color):
 	var nb_points = 64
 	var points_arc = PackedVector2Array()
@@ -79,27 +76,49 @@ func draw_timer_arc(center, radius, angle_from, angle_to, color):
 		draw_line(points_arc[index_point], points_arc[index_point + 1], color, timerWidth * .80, true)
 
 
-func explosion(bubblePos, radius):
-	var area = Area2D.new()
-	var shape = CircleShape2D.new()
-	shape.set_radius(radius)
-	area.add_shape(shape)
-	$Self.add_child(area)    
-	area.set_enable_monitoring(true)
-	await get_tree().process_frame
-	area.set_pos(bubblePos)
-	await get_tree().process_frame
-	var area_list = area.get_overlapping_areas()
-	print(area_list)
-	for i in area_list:
-		if i.has_method("get_slowed"): 
-			i.get_slowed()
-	area.queue_free()
+func create_bubble(delta):
+	var area
+	var shape
+	var collision
+	var center
+	var bubblePos
+	if not bubbleExists:
+		area = Area2D.new()
+		shape = CircleShape2D.new()
+		shape.set_radius(radius)
+		collision = CollisionShape2D.new()
+		collision.set_shape(shape)
+		center = Vector2.ZERO
+		bubblePos = Vector2.ZERO
+		add_child(collision) 
+		add_to_group("time_bubble")
+		print("added collision to group")
+		bubbleExists = true
+	else:
+		pass
+	
+	if not bubbleBuilt:
+		build_bubble()
+	elif bubbleBuilt:
+		bubble_Timer(delta)
+	
+	
+	
+	
+	
+	# Put overlapping areas in array
+	#var area_list = area.get_overlapping_areas()
+	#print(area_list)
+	#for i in area_list:
+	#	if i.has_method("get_slowed"): 
+	#		i.get_slowed()
+	
+	# Destroy area
+	#area.queue_free()
 
 
 func _draw():
 	var center = Vector2.ZERO
-	var radius = 150
 	var color = Color(1.0, 1.0, 1.0)
 
 	draw_circle_arc( center, radius, angle_from, angle_to, color )
