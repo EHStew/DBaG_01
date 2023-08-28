@@ -15,18 +15,13 @@ var bubbleExists = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var player = $/root/Main/Player
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-
-	# Rotate arc 
-
 	handle_overlap()
-	
 	create_bubble(delta)
-	
 	queue_redraw()
 
 
@@ -55,6 +50,8 @@ func bubble_Timer(delta):
 			else:
 				queue_free()
 
+
+
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	var nb_points = 64
 	var points_arc = PackedVector2Array()
@@ -82,6 +79,8 @@ func handle_overlap():
 		angle_from = wrapf(angle_from, 0, 360)
 		angle_to = wrapf(angle_to, 0, 360)
 
+
+
 func create_bubble(delta):
 	var area
 	var shape
@@ -99,6 +98,7 @@ func create_bubble(delta):
 		add_child(collision) 
 		add_to_group("time_bubble")
 		print("added collision to group")
+		set_monitoring(true)
 		bubbleExists = true
 	else:
 		pass
@@ -108,19 +108,13 @@ func create_bubble(delta):
 	elif bubbleBuilt:
 		bubble_Timer(delta)
 	
-	
-	
-	
-	
 	# Put overlapping areas in array
 	#var area_list = area.get_overlapping_areas()
 	#print(area_list)
 	#for i in area_list:
 	#	if i.has_method("get_slowed"): 
 	#		i.get_slowed()
-	
-	# Destroy area
-	#area.queue_free()
+
 
 
 func _draw():
@@ -129,3 +123,13 @@ func _draw():
 
 	draw_circle_arc( center, radius, angle_from, angle_to, color )
 	draw_timer_arc(center, radius, t_Angle_from, t_Angle_to, Color(0.0, 0.0, 0.0))
+
+
+
+func _on_area_entered(area):
+	if area.is_in_group("Slowable"):
+		area.slowFactor = 0.5
+
+func _on_area_exited(area):
+	if area.is_in_group("Slowable"):
+		area.slowFactor = 1

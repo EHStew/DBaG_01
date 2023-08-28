@@ -26,14 +26,3 @@ func _on_body_entered(body):
 	if target.dashing == false:
 		if body.is_in_group("Player"):
 			body.game_over()
-
-
-func _on_area_entered(area):
-	if area.is_in_group("time_bubble"):
-		slowFactor = 0.5
-	
-
-
-func _on_area_exited(area):
-	if area.is_in_group("time_bubble"):
-		slowFactor = 1
