@@ -15,7 +15,8 @@ var bubbleExists = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var player = $/root/Main/Player
+	global_position = player.global_position
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -103,7 +103,7 @@ func dash():
 	if Input.is_action_just_pressed("use_power"):
 		var tBubble = load("res://time_bubble.tscn")
 		var instance = tBubble.instantiate()
-		add_child(instance)
+		$/root/Main.add_child(instance)
 	else:
 		pass
 
