@@ -25,8 +25,8 @@ var dashing = false
 var dashFriction = friction 
 var dashLength = .2
 
-var blinkCounter = 0
-var timeCounter = 0
+var blinkCount = 0
+var tBubbleCount = 0
 
 func _ready():
 	screenSize = get_viewport_rect().size
@@ -83,10 +83,10 @@ func player_movement(delta):
 
 func dash():
 	if Input.is_action_just_pressed("dash"):
-		if blinkCounter >= 1:
+		if blinkCount >= 1:
 			print("Dashing")
 			dashing = true
-			blinkCounter -= 1
+			blinkCount -= 1
 			await  get_tree().create_timer(.05).timeout
 			self.hide()
 			await  get_tree().create_timer(.08).timeout
@@ -101,9 +101,11 @@ func dash():
 
 #func slow_time():
 	if Input.is_action_just_pressed("use_power"):
-		var tBubble = load("res://time_bubble.tscn")
-		var instance = tBubble.instantiate()
-		$/root/Main.add_child(instance)
+		if tBubbleCount >= 1:
+			var tBubble = load("res://time_bubble.tscn")
+			var instance = tBubble.instantiate()
+			$/root/Main.add_child(instance)
+			tBubbleCount -=1
 	else:
 		pass
 

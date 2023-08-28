@@ -37,12 +37,12 @@ func build_bubble():
 	elif  angle_to + bubbleBuildSpeed >= 360:
 		if angle_to < 360:
 			angle_to += 1
-			t_Angle_to = angle_to
+			t_Angle_to = angle_to -10
 		else:
-			await  get_tree().create_timer(.5).timeout
+			await  get_tree().create_timer(.2).timeout
 			bubbleBuilt = true
 
-func bubble_Timer(delta):
+func bubble_Timer(delta, area):
 		if t_Angle_from < 360:
 			t_Angle_from += bubbleTime * delta
 		elif t_Angle_from >= 360:
@@ -51,7 +51,7 @@ func bubble_Timer(delta):
 				if  angle_from + bubbleBuildSpeed < angle_to:
 					angle_from += bubbleBuildSpeed
 				else:
-					angle_from += 1
+					angle_from += 5
 			else:
 				queue_free()
 
@@ -109,7 +109,7 @@ func create_bubble(delta):
 	if not bubbleBuilt:
 		build_bubble()
 	elif bubbleBuilt:
-		bubble_Timer(delta)
+		bubble_Timer(delta, area)
 	
 	# Put overlapping areas in array
 	#var area_list = area.get_overlapping_areas()
