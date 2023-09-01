@@ -23,9 +23,9 @@ func _ready():
 	# Set timer interval
 	timer.set_wait_time(randf_range(1,3))
 	# Set it as repeat
-	timer.set_one_shot(false)
+	timer.set_one_shot(false )
 	# Connect its timeout signal to the function you want to repeat
-	timer.timeout.connect(shoot_player)
+	timer.timeout.connect(shoot_timer)
 	# Add to the tree as child of the current node
 	add_child(timer)
 	timer.start()
@@ -47,10 +47,23 @@ func predict_player_pos():
 	var dist = global_position.distance_to(target.global_position)
 	look_at(target.global_position + target.player_fol * (dist/10))
 
-func shoot_player():
+func shoot_timer():
+
+	var timer = Timer.new()
+	# Set timer interval
+	timer.set_wait_time(1/slowFactor)
+	# Set it as repeat
+	timer.set_one_shot(true)
+	# Connect its timeout signal to the function you want to repeat
+	timer.timeout.connect(shoot)
+	# Add to the tree as child of the current node
+	add_child(timer)
+	timer.start()
+
+func shoot():
 	var bull = bullet.instantiate()
 	bull.dir = rotation
 	bull.rotation = rotation
 	bull.global_position = global_position
-	get_parent().add_child(bull)
-	hasShot = false
+	bull.add_to_group("Slowable")
+	get_parent().add_child(bull)	

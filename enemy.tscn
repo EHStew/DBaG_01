@@ -9,6 +9,7 @@ size = Vector2(36, 36)
 [node name="Enemy" type="Area2D" groups=["Slowable"]]
 position = Vector2(569, 312)
 script = ExtResource("1_yi7bt")
+move_speed = 150.0
 metadata/_edit_group_ = true
 
 [node name="Enemy" type="Sprite2D" parent="."]

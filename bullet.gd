@@ -1,7 +1,8 @@
-extends Node2D
+extends Area2D
 
 var dir = 0
-var bullet_speed = 10
+var bullet_speed = 3
+var slowFactor = 1
 
 func _ready():
 	pass
@@ -9,7 +10,7 @@ func _ready():
 
 func _process(delta):
 	var move_dir = Vector2(1,0).rotated(dir)
-	global_position += (move_dir * bullet_speed)
+	global_position += (move_dir * bullet_speed * slowFactor)
 
 
 

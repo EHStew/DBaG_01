@@ -6,7 +6,7 @@ var dashDir = Vector2.ZERO
 var screenSize
 
 
-const maxSpeed = 800
+const maxSpeed = 400
 const accel = 10000
 const friction = 8000
 const dashMod = 10
