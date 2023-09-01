@@ -17,6 +17,9 @@ var walkSpeed = accel
 var timeSlowed = false
 var slowFactor = 1
 
+var player_fol = Vector2(1,1)
+var old_player_pos
+
 
 var dashSpeed = accel * dashMod
 var dashSpeedCap = maxSpeed * 6
@@ -30,12 +33,16 @@ var tBubbleCount = 0
 
 func _ready():
 	screenSize = get_viewport_rect().size
+	old_player_pos = global_position
 
 
 
 
 func _physics_process(delta):
 	player_movement(delta)
+	
+	player_fol = global_position - old_player_pos
+	old_player_pos = global_position
 
 
 
@@ -51,8 +58,6 @@ func get_dir():
 		return dir.normalized()
 	elif dashing:
 		return dashDir.normalized()
-
-
 
 
 func player_movement(delta):
@@ -78,8 +83,6 @@ func player_movement(delta):
 	position.x = clamp(position.x, 0, screenSize.x)
 	position.y = clamp(position.y, 0, screenSize.y)
 
-#func time_bubble():
-	
 
 func dash():
 	if Input.is_action_just_pressed("dash"):

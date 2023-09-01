@@ -132,7 +132,6 @@ func _draw():
 func _on_area_entered(area):
 	if area.is_in_group("Slowable"):
 		area.slowFactor = slowAmount
-
 func _on_area_exited(area):
 	if area.is_in_group("Slowable"):
 		area.slowFactor = 1

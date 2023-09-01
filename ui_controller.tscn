@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://du8fx47gw5id"]
+
+[ext_resource type="Script" path="res://ui_controller.gd" id="1_fcaq2"]
+[ext_resource type="Texture2D" uid="uid://cdwgtfd80d7hw" path="res://Assets/sprites/time bubble ui.png" id="2_0lls2"]
+[ext_resource type="Texture2D" uid="uid://tc56hd313spi" path="res://Assets/sprites/blink dash ui.png" id="3_vrgl8"]
+
+[node name="UI Controller" type="Node2D"]
+script = ExtResource("1_fcaq2")
+
+[node name="timeBubbleUI" type="Sprite2D" parent="."]
+texture_repeat = 2
+scale = Vector2(2, 2)
+texture = ExtResource("2_0lls2")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 0, 32)
+
+[node name="blinkDashUI" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(0, 74)
+scale = Vector2(2, 2)
+texture = ExtResource("3_vrgl8")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 0, 32)
