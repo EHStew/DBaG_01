@@ -23,4 +23,6 @@ func _on_VisibilityNotifier2D_screen_exited():
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
 		body.healthTotal -= 10
-		body.stunned = true
+		if not body.stunned:
+			body.stunned = true
+		queue_free()

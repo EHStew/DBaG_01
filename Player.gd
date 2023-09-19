@@ -53,36 +53,45 @@ func _physics_process(delta):
 
 
 func get_dir():
-	if not dashing:
-		dir.x = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed(("move_left")))
-		# 1 = right | -1 = left
-		dir.y = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed(("move_up")))
-		if dir != Vector2.ZERO:
-			dashDir.x = dir.x
-			dashDir.y = dir.y
-		return dir.normalized()
-	elif dashing:
-		return dashDir.normalized()
+		if not dashing:
+			dir.x = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed(("move_left")))
+			# 1 = right | -1 = left
+			dir.y = int(Input.is_action_pressed("move_down")) - int(Input.is_action_pressed(("move_up")))
+			if dir != Vector2.ZERO:
+				dashDir.x = dir.x
+				dashDir.y = dir.y
+			return dir.normalized()
+		elif dashing:
+			return dashDir.normalized()
 
 
 func player_movement(delta):
 	dir = get_dir()
 	dash()
 	if not stunned:
+		$AnimatedSprite2D.animation="running"
 		if not dashing:
 			if dir == Vector2.ZERO:
 				if velocity.length() > (fric * delta):
 					velocity -= velocity.normalized() * (fric * delta)
+					$AnimatedSprite2D.play()
 				else:
 					velocity = Vector2.ZERO
+					$AnimatedSprite2D.stop()
 			else:
 					velocity += (dir * walkSpeed * delta)
 					velocity = velocity.limit_length(maxSpeed) 
+					$AnimatedSprite2D.play()
 		else:
 			velocity += (dashDir * dashSpeed * delta)
-			velocity = velocity.limit_length(dashSpeedCap) 
+			velocity = velocity.limit_length(dashSpeedCap)
+			$AnimatedSprite2D.stop
 	else:
-		stun(delta)
+		$AnimatedSprite2D.animation="stun_shake"
+		$AnimatedSprite2D.play()
+		velocity = Vector2.ZERO
+		await  get_tree().create_timer(.7).timeout
+		stunned = false
 
 	move_and_slide()
 	# Restrict player movement to view boundraries
@@ -117,9 +126,16 @@ func dash():
 	else:
 		pass
 
-func stun(delta):
-	if not stunned:
-		pass
+#func stun():
+#	if not stunned:
+#		$AnimatedSprite2D.animation="running"
+#	else:
+#		$AnimatedSprite2D.animation="stun_shake"
+#		$AnimatedSprite2D.play()
+
+func _on_animated_sprite_2d_animation_finished():
+	if $AnimatedSprite2D.animation == "stun_shake":
+		stunned = false
 
 
 func game_over():
