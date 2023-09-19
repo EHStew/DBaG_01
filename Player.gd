@@ -6,10 +6,16 @@ var dashDir = Vector2.ZERO
 var screenSize
 
 
-const maxSpeed = 400
+const maxSpeed = 300
 const accel = 10000
 const friction = 8000
-const dashMod = 10
+const dashMod = 20
+var fric = friction
+var stunFric = friction * 3
+
+var stunned = false
+
+var healthTotal = 100
 
 var canMove = true
 var walkSpeed = accel
@@ -25,7 +31,6 @@ var dashSpeed = accel * dashMod
 var dashSpeedCap = maxSpeed * 6
 var canDash = true
 var dashing = false
-var dashFriction = friction 
 var dashLength = .2
 
 var blinkCount = 0
@@ -63,20 +68,21 @@ func get_dir():
 func player_movement(delta):
 	dir = get_dir()
 	dash()
-	
-	if not dashing:
-		if dir == Vector2.ZERO:
-			if velocity.length() > (friction * delta):
-				velocity -= velocity.normalized() * (friction * delta)
+	if not stunned:
+		if not dashing:
+			if dir == Vector2.ZERO:
+				if velocity.length() > (fric * delta):
+					velocity -= velocity.normalized() * (fric * delta)
+				else:
+					velocity = Vector2.ZERO
 			else:
-				velocity = Vector2.ZERO
+					velocity += (dir * walkSpeed * delta)
+					velocity = velocity.limit_length(maxSpeed) 
 		else:
-				velocity += (dir * walkSpeed * delta)
-				velocity = velocity.limit_length(maxSpeed) 
+			velocity += (dashDir * dashSpeed * delta)
+			velocity = velocity.limit_length(dashSpeedCap) 
 	else:
-		velocity += (dashDir * dashSpeed * delta)
-		velocity = velocity.limit_length(dashSpeedCap) 
-
+		stun(delta)
 
 	move_and_slide()
 	# Restrict player movement to view boundraries
@@ -85,6 +91,7 @@ func player_movement(delta):
 
 
 func dash():
+
 	if Input.is_action_just_pressed("dash"):
 		if blinkCount >= 1:
 			print("Dashing")
@@ -93,12 +100,10 @@ func dash():
 			await  get_tree().create_timer(.05).timeout
 			self.hide()
 			await  get_tree().create_timer(.08).timeout
-			dashSpeedCap = 1000
 			await  get_tree().create_timer(dashLength/3).timeout
 			dashing = false
 			await  get_tree().create_timer(.02).timeout
 			self.show()
-			dashSpeedCap = maxSpeed * 6
 
 
 
@@ -110,6 +115,10 @@ func dash():
 			$/root/Main.add_child(instance)
 			tBubbleCount -=1
 	else:
+		pass
+
+func stun(delta):
+	if not stunned:
 		pass
 
 

@@ -7,7 +7,7 @@
 radius = 9.0
 height = 36.0
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="Area2D" groups=["Projectile"]]
 script = ExtResource("1_fkpdq")
 
 [node name="Bullet" type="Sprite2D" parent="."]
@@ -17,3 +17,5 @@ texture = ExtResource("2_agrs4")
 position = Vector2(1, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_y3i54")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
